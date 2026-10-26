@@ -1,0 +1,19 @@
+@if (loading()) { <p>Chargement…</p> }
+@if (error()) { <p role="alert">{{ error() }}</p> }
+@if (conference(); as conf) {
+  <div class="card">
+    <div class="card-header">
+      <span class="badge">CONFÉRENCE</span>
+      <h1>{{ conf.title }}</h1>
+    </div>
+    <div class="card-body">
+      <p>{{ conf.description }}</p>
+      <div class="info"><span class="icon">📅</span><p>{{ conf.date }}</p></div>
+      <div class="info"><span class="icon">📍</span><p>{{ conf.location }}</p></div>
+      <p>Prix : {{ conf.price }}</p>
+      <p>Places disponibles : {{ conf.nbPlaces }}</p>
+      <a [routerLink]="['/update', conf.id]" class="back-link">Modifier</a>
+    </div>
+  </div>
+}
+<a routerLink="/list" class="back-link">← Retour aux conférences</a>

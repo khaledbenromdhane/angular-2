@@ -1,0 +1,29 @@
+<h1>Conférences</h1>
+<p><a routerLink="/conferences/add">Ajouter une conférence</a></p>
+@if (error()) { <p role="alert">{{ error() }}</p> }
+@if (loading()) {
+  <p>Chargement des conférences…</p>
+} @else {
+  <div class="cards-container">
+    @for (conf of conferances(); track conf.id) {
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87" alt="Conférence" />
+        <div class="card-content">
+          <h2>{{ conf.title }}</h2>
+          <p>📅 {{ conf.date }}</p>
+          <p>📍 {{ conf.location }}</p>
+          <p>{{ conf.description }}</p>
+          <p>Prix : {{ conf.price }} — Places : {{ conf.nbPlaces }}</p>
+          <button type="button" [routerLink]="['/details', conf.id]">Détails</button>
+          <button type="button" [routerLink]="['/update', conf.id]">Modifier</button>
+          <button type="button" [disabled]="conf.id === undefined || deletingIds().includes(conf.id!)"
+            (click)="deleteConferance(conf.id)">
+            {{ deletingIds().includes(conf.id!) ? 'Suppression…' : 'Supprimer' }}
+          </button>
+        </div>
+      </div>
+    } @empty {
+      <p>Aucune conférence disponible.</p>
+    }
+  </div>
+}

@@ -1,0 +1,28 @@
+<h1>Modifier une conférence</h1>
+@if (loading()) { <p>Chargement…</p> }
+@if (error()) { <p role="alert">{{ error() }}</p> }
+@if (!loading() && conference()) {
+  <form [formGroup]="conferenceForm" (ngSubmit)="submitForm()">
+    <fieldset [disabled]="saving()">
+      <label for="title">Titre</label>
+      <input id="title" type="text" formControlName="title" />
+      <label for="description">Description</label>
+      <textarea id="description" formControlName="description"></textarea>
+      <label for="location">Lieu</label>
+      <input id="location" type="text" formControlName="location" />
+      <label for="date">Date</label>
+      <input id="date" type="date" formControlName="date" />
+      <label for="price">Prix</label>
+      <input id="price" type="number" min="0" step="0.01" formControlName="price" />
+      <label for="nbPlaces">Nombre de places</label>
+      <input id="nbPlaces" type="number" min="0" step="1" formControlName="nbPlaces" />
+      @if (conferenceForm.invalid) {
+        <p>Tous les champs sont obligatoires. Le prix doit être positif ou nul et le nombre de places doit être un entier positif ou nul.</p>
+      }
+      <button type="submit" [disabled]="conferenceForm.invalid || saving()">
+        {{ saving() ? 'Enregistrement…' : 'Enregistrer' }}
+      </button>
+    </fieldset>
+  </form>
+}
+<a routerLink="/list">Annuler et revenir à la liste</a>

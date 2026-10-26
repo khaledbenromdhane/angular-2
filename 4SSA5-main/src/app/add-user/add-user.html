@@ -1,0 +1,26 @@
+<form [formGroup]="userForm" (ngSubmit)="submitForm()">
+    <label for="username">Username:</label>
+    <input type="text" formControlName="username" placeholder="Username">
+@if (userForm.get('username')?.invalid && userForm.get('username')?.touched){
+       @if(userForm.get('username')?.errors?.['required']){
+        <p style="color: red;"  >Username is required</p>
+        } @if(userForm.get('username')?.hasError('maxlength')){
+        <p style="color: red;"  >Username must be at most 3 characters</p>
+        }
+}
+    <br>
+    <label for="email">Email:</label>
+    <input type="email" formControlName="email" placeholder="Email">
+@if (email?.invalid && userForm.get('email')?.touched){
+        <p style="color: red;"  >Format email invalide</p>
+        }
+    <br>
+
+    <label for="adress">Address:</label>
+    <input type="text" formControlName="adress" placeholder="Address">
+    @if(userForm.get('adress')?.invalid && userForm.get('adress')?.touched){
+        <p style="color: red;"  >Address must be at least 3 characters</p>
+        }
+    <br>
+    <button [disabled]="userForm.invalid" type="submit">Submit</button>
+</form>
